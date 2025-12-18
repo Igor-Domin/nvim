@@ -1,0 +1,7 @@
+print("Hello Igor!")
+require("config.settings")
+require("config.lazy")
+require("config.colorscheme")
+require("config.vim-keymaps")
+require("config.lsp-keymaps")
+require("config.lsp")
