@@ -1,6 +1,6 @@
 return {
   'tpope/vim-fugitive',
-  tag = 'v3.7',
+  commit = '61b51c0',
   config = function()
   end,
 }
