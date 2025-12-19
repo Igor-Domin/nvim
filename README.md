@@ -10,12 +10,12 @@
 
 [Find / Search]
 <Space>fw     (N)  →  Find Word Under Cursor     - telescope.grep_string
+<Space>fs     (N)  →  Find Symbol (Document)     - telescope.lsp_document_symbols
 <Space>fa     (N)  →  Find All (Live Grep)       - telescope.live_grep
 <Space>ff     (N)  →  Find File                  - telescope.find_files
 <Space>fg     (N)  →  Find Git File              - telescope.git_files (fallback)
 <Space>fd     (N)  →  Find Definition            - vim.lsp.buf.definition
 <Space>fr     (N)  →  Find References            - vim.lsp.buf.references
-<Space>fs     (N)  →  Find Symbol (workspace)    - vim.lsp.buf.workspace_symbols
 
 [Editing]
 <Space>re     (N)  →  Rename Symbol              - vim.lsp.buf.rename

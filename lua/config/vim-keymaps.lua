@@ -40,6 +40,21 @@ end)
 
 vim.keymap.set('n', '<leader>fa', builtin.live_grep, {})
 
+vim.keymap.set("n", "<leader>fs", function()
+  require("telescope.builtin").lsp_document_symbols({
+    symbols = {
+      "Function",
+      "Method",
+      "Constructor",
+      "Class",
+      "Interface",
+      "Module",
+      "TypeParameter",
+      "Variable",
+    },
+  })
+end)
+
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 
 vim.keymap.set("n", "<leader>fg", function()
