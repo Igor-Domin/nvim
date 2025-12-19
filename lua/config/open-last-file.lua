@@ -1,24 +1,29 @@
 local uv = vim.uv or vim.loop
-local statefile = vim.fn.stdpath("state") .. "/lastfile.txt"
 
-local last_saved_path
+local function project_root(path)
+  path = path or (uv.cwd and uv.cwd()) or vim.fn.getcwd()
+  return (vim.fs and vim.fs.root and vim.fs.root(path, { ".git" })) or path
+end
 
-local function is_file(path)
-  if not path or path == "" then return false end
-  if path:match("^%w+://") then return false end
-  local st = uv.fs_stat(path)
-  return st and st.type == "file"
+local function statefile_for(root)
+  local rootname = vim.fn.fnamemodify(root, ":t") -- e.g. "nvim", "AdventOfCode2025"
+  return vim.fn.stdpath("state") .. ("/%s-lastfile.txt"):format(rootname)
 end
 
 local function save_lastfile()
   if vim.bo.buftype ~= "" then return end
-
   local path = vim.api.nvim_buf_get_name(0)
-  if not is_file(path) then return end
-  if path == last_saved_path then return end
+  if path == "" or path:match("^%w+://") then
+    return
+  end
 
-  last_saved_path = path
-  pcall(vim.fn.writefile, { path }, statefile)
+  local st = uv.fs_stat(path)
+  if not (st and st.type == "file") then
+    return
+  end
+
+  local root = project_root(path)
+  pcall(vim.fn.writefile, { path }, statefile_for(root))
 end
 
 local function should_autoreopen()
@@ -27,12 +32,26 @@ local function should_autoreopen()
   return argc == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1
 end
 
+local function startup_root()
+  if vim.fn.argc() == 1 then
+    local a0 = vim.fn.argv(0)
+    if a0 and vim.fn.isdirectory(a0) == 1 then
+      return a0
+    end
+  end
+  return (uv.cwd and uv.cwd()) or vim.fn.getcwd()
+end
+
 local function open_lastfile()
   if not should_autoreopen() then return false end
 
-  local ok, lines = pcall(vim.fn.readfile, statefile)
-  local path = (ok and lines and lines[1]) or nil
-  if not is_file(path) then return false end
+  local root = project_root(startup_root())
+  local ok, lines = pcall(vim.fn.readfile, statefile_for(root))
+  local path = ok and lines and lines[1] or nil
+  if not path then return false end
+
+  local st = uv.fs_stat(path)
+  if not (st and st.type == "file") then return false end
 
   vim.cmd({ cmd = "edit", args = { path } })
   return true

@@ -1,4 +1,5 @@
 ---- Normal mode ----
+
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true })
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { silent = true })
 
@@ -17,11 +18,13 @@ vim.keymap.set('n', "<leader>gs", vim.cmd.Git)
 
 
 ---- Insert mode ----
+
 vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { silent = true })
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { silent = true })
 
 
 --- Visual mode ---
+
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true })
 
@@ -30,6 +33,7 @@ vim.keymap.set("v", "<leader>rs", [[y:%s/\V<C-r>"/<C-r>"/gI<Left><Left><Left>]])
 
 
 --- Telescope ---
+
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>fw', function()
@@ -69,6 +73,7 @@ end)
 
 
 --- Harpoon ---
+
 local harpoon = require('harpoon')
 local list = harpoon:list()
 harpoon:setup()
@@ -89,6 +94,7 @@ vim.keymap.set("n", "<C-L-N>", function() list:next() end)
 
 
 --- Run ---
+
 local function display_result(output, time_output)
   local user = time_output:match("([%d.]+)s user")
   local sys  = time_output:match("([%d.]+)s system")
