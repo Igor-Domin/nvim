@@ -1,4 +1,4 @@
--- Normal mode --
+---- Normal mode ----
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true })
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { silent = true })
 
@@ -16,12 +16,12 @@ vim.keymap.set('n', '<leader>u', function() vim.cmd.UndotreeToggle() end)
 vim.keymap.set('n', "<leader>gs", vim.cmd.Git)
 
 
--- Insert mode --
+---- Insert mode ----
 vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { silent = true })
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { silent = true })
 
 
--- Visual mode --
+--- Visual mode ---
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true })
 
@@ -29,7 +29,7 @@ vim.keymap.set("v", "<leader>y", '"+y', { desc = "Yank selection to clipboard" }
 vim.keymap.set("v", "<leader>rs", [[y:%s/\V<C-r>"/<C-r>"/gI<Left><Left><Left>]])
 
 
--- Telescope --
+--- Telescope ---
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>fw', function()
@@ -68,7 +68,7 @@ vim.keymap.set("n", "<leader>fg", function()
 end)
 
 
--- Harpoon --
+--- Harpoon ---
 local harpoon = require('harpoon')
 local list = harpoon:list()
 harpoon:setup()
@@ -88,7 +88,7 @@ vim.keymap.set("n", "<C-L-P>", function() list:prev() end)
 vim.keymap.set("n", "<C-L-N>", function() list:next() end)
 
 
--- Run --
+--- Run ---
 local function display_result(output, time_output)
   local user = time_output:match("([%d.]+)s user")
   local sys  = time_output:match("([%d.]+)s system")
@@ -166,7 +166,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
--- Other --
+--- Other ---
 
 vim.api.nvim_create_user_command("GitMe", function(opts)
   if opts.args == "" then
@@ -180,7 +180,7 @@ vim.api.nvim_create_user_command("GitMe", function(opts)
   local email = opts.args
 
   local function git(args)
-    vim.fn.system(vim.list_extend({ "git", "config", "--local" }, args))
+    vim.fn.system(vim.list_extend({ "git", "config", "---local" }, args))
   end
 
   git({ "user.name", "Igor Domin" })

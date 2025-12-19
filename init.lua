@@ -1,5 +1,7 @@
 print("Hello Igor!")
 require("config.settings")
+require("config.open-last-file")
+require("config.hunt-messages")
 require("config.lazy")
 require("config.colorscheme")
 require("config.vim-keymaps")
