@@ -29,7 +29,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.keymap.set("n", "<leader>fd", vim.lsp.buf.definition, opts)
       vim.keymap.set("n", "<leader>fr", vim.lsp.buf.references, opts)
-      vim.keymap.set("n", "<leader>fs", vim.lsp.buf.workspace_symbol, opts)
+      -- Returns sybols only from first HLS client... Unusable...
+      -- vim.keymap.set("n", "<leader>fs", vim.lsp.buf.workspace_symbol, opts)
       vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 
       vim.keymap.set("n", "<leader>re", vim.lsp.buf.rename, opts)
