@@ -1,6 +1,7 @@
 return {
   'nvim-telescope/telescope.nvim',
   tag = 'v0.2.0',
+  -- commit = '3d757e5',
   dependencies = {
     -- { 'nvim-lua/plenary.nvim',         commit = 'b9fd522' },
     -- {
