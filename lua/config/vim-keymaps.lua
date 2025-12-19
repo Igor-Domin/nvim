@@ -41,14 +41,14 @@ end)
 vim.keymap.set('n', '<leader>fa', builtin.live_grep, {})
 
 vim.keymap.set("n", "<leader>fs", function()
-  require("telescope.builtin").lsp_document_symbols({
+  builtin.lsp_document_symbols({
     symbols = {
       "Function",
       "Method",
       "Constructor",
       "Class",
       "Interface",
-      "Module",
+      -- "Module",
       "TypeParameter",
       "Variable",
     },
