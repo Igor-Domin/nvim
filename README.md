@@ -1,6 +1,6 @@
 
 
-<p align="center">Just a repo for my shitty config :)</p>
+<p align="center">Just my shitty config :)</p>
 
 
 <p align="center"><strong>Shortcuts</strong></p>
