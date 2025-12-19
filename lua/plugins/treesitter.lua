@@ -1,9 +1,11 @@
 local languages = {
-  'haskell', 'scala', 'java', 'python', 'sql', 'help', 'lua', 'vim', 'vimdoc', 'query', 'markdown', 'markdown_inline'
+  'haskell', 'scala', 'java', 'python', 'sql', 'help', 'lua', 'vim', 'vimdoc', 'query', 'markdown',
+  'markdown_inline'
 }
 return {
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
+  commit = '4fc09be',
   build = ':TSUpdate',
   config = function()
     -- replicate `ensure_installed`, runs asynchronously, skips existing languages
