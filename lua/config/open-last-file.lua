@@ -1,31 +1,5 @@
 local uv = vim.uv or vim.loop
 
-local function project_root(path)
-  path = path or (uv.cwd and uv.cwd()) or vim.fn.getcwd()
-  return (vim.fs and vim.fs.root and vim.fs.root(path, { ".git" })) or path
-end
-
-local function statefile_for(root)
-  local rootname = vim.fn.fnamemodify(root, ":t") -- e.g. "nvim", "AdventOfCode2025"
-  return vim.fn.stdpath("state") .. ("/%s-lastfile.txt"):format(rootname)
-end
-
-local function save_lastfile()
-  if vim.bo.buftype ~= "" then return end
-  local path = vim.api.nvim_buf_get_name(0)
-  if path == "" or path:match("^%w+://") then
-    return
-  end
-
-  local st = uv.fs_stat(path)
-  if not (st and st.type == "file") then
-    return
-  end
-
-  local root = project_root(path)
-  pcall(vim.fn.writefile, { path }, statefile_for(root))
-end
-
 local function should_autoreopen()
   local argc = vim.fn.argc()
   if argc == 0 then return true end
@@ -42,13 +16,43 @@ local function startup_root()
   return (uv.cwd and uv.cwd()) or vim.fn.getcwd()
 end
 
+local function project_root(path)
+  path = path or (uv.cwd and uv.cwd()) or vim.fn.getcwd()
+  return (vim.fs and vim.fs.root and vim.fs.root(path, { ".git" })) or path
+end
+
+local function statefile_for(root)
+  local rootname = vim.fn.fnamemodify(root, ":t")
+  return vim.fn.stdpath("state") .. ("/%s-lastfile.txt"):format(rootname)
+end
+
+local function is_ignored(path)
+  if not path or path == "" then return true end
+  if path:match("^%w+://") then return true end
+  if path:match("/%.git/") or path:match("/%.git$") then return true end
+  return false
+end
+
+local function save_lastfile()
+  if vim.bo.buftype ~= "" then return end
+
+  local path = vim.api.nvim_buf_get_name(0)
+  if is_ignored(path) then return end
+
+  local st = uv.fs_stat(path)
+  if not (st and st.type == "file") then return end
+
+  local root = project_root(path)
+  pcall(vim.fn.writefile, { path }, statefile_for(root))
+end
+
 local function open_lastfile()
   if not should_autoreopen() then return false end
 
   local root = project_root(startup_root())
   local ok, lines = pcall(vim.fn.readfile, statefile_for(root))
   local path = ok and lines and lines[1] or nil
-  if not path then return false end
+  if is_ignored(path) then return false end
 
   local st = uv.fs_stat(path)
   if not (st and st.type == "file") then return false end
@@ -77,7 +81,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
   callback = function()
-    -- vim.defer_fn(open_lastfile, 50)
     vim.schedule(open_lastfile)
   end,
 })
