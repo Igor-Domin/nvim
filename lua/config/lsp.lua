@@ -1,4 +1,4 @@
---- Haskell ---
+-- Haskell --
 
 local hls = require('lsp.hls')
 
@@ -6,12 +6,13 @@ vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('user-haskell-lsp', {}),
   pattern = { 'haskell', 'lhaskell' },
   callback = function(args)
-    hls.start(args.buf)
+    local buf_nr = args.buf
+    hls.start(buf_nr)
   end,
 })
 
 
---- Lua ---
+-- Lua --
 
 local lua_ls = require('lsp.lua_ls')
 
@@ -19,15 +20,16 @@ vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('user-lua-lsp', {}),
   pattern = { 'lua' },
   callback = function(args)
-    lua_ls.start(args.buf)
+    local buf_nr = args.buf
+    lua_ls.start(buf_nr)
   end,
 })
 
 
---- Markdown ---
+-- Markdown --
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
@@ -37,15 +39,15 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
---- Other configs ---
+-- Other configs --
 
 vim.diagnostic.config({
   virtual_text = false,
   virtual_lines = {
     -- severity = { min = vim.diagnostic.severity.WARN },
-    prefix = "▎ ",
+    prefix = '▎ ',
     format = function(d)
-      return d.message:gsub("\n.*", "")
+      return d.message:gsub('\n.*', '')
     end,
   },
   underline = true,
@@ -54,14 +56,14 @@ vim.diagnostic.config({
   severity_sort = true,
   -- Border
   float = {
-    border = "double",
-    source = "if_many",
-    header = "",
-    prefix = "",
+    border = 'double',
+    source = 'if_many',
+    header = '',
+    prefix = '',
   },
 })
 
--- vim.api.nvim_create_autocmd("CursorHold", {
+-- vim.api.nvim_create_autocmd('CursorHold', {
 --   callback = function()
 --     vim.diagnostic.open_float()
 --   end,

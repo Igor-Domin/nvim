@@ -1,3 +1,5 @@
 return {
-  'nvim-telescope/telescope-fzf-native.nvim', build = 'make', commit = '6fea601'
+  'nvim-telescope/telescope-fzf-native.nvim',
+  build = 'make',
+  commit = '6fea601',
 }

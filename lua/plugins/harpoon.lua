@@ -10,24 +10,23 @@ return {
     local harpoon = require('harpoon')
     harpoon:setup({})
 
-    local conf = require("telescope.config").values
+    local telescope_config = require('telescope.config').values
     local function toggle_telescope(harpoon_files)
-      local file_paths = {}
+      local paths = {}
       for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
+        table.insert(paths, item.value)
       end
 
-
-      require("telescope.pickers").new({}, {
-        prompt_title = "Harpoon",
-        finder = require("telescope.finders").new_table({
-          results = file_paths,
+      require('telescope.pickers').new({}, {
+        prompt_title = 'Harpoon',
+        finder = require('telescope.finders').new_table({
+          results = paths,
         }),
-        previewer = conf.file_previewer({}),
-        sorter = conf.generic_sorter({}),
+        previewer = telescope_config.file_previewer({}),
+        sorter = telescope_config.generic_sorter({}),
       }):find()
     end
 
-    vim.keymap.set('n', "<leader>Q", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+    vim.keymap.set('n', '<leader>Q', function() toggle_telescope(harpoon:list()) end, { desc = 'Open harpoon window' })
   end,
 }

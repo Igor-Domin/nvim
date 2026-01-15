@@ -1,11 +1,11 @@
 local languages = {
-  'haskell', 'scala', 'java', 'python', 'sql', 'help', 'lua', 'vim', 'vimdoc', 'query', 'markdown',
-  'markdown_inline'
+  'haskell', 'scala', 'java', 'python', 'go', 'sql', 'help', 'lua', 'vim', 'vimdoc', 'query', 'markdown',
+  'markdown_inline',
 }
 return {
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
-  commit = '4fc09be',
+  commit = '8cdffc6',
   build = ':TSUpdate',
   config = function()
     -- replicate `ensure_installed`, runs asynchronously, skips existing languages
@@ -14,14 +14,14 @@ return {
     vim.api.nvim_create_autocmd('FileType', {
       group = vim.api.nvim_create_augroup('treesitter.setup', { clear = true }),
       callback = function(args)
-        local buf = args.buf
+        local buf_nr = args.buf
         local filetype = args.match
 
         -- you need some mechanism to avoid running on buffers that do not
         -- correspond to a language (like oil.nvim buffers), this implementation
         -- checks if a parser exists for the current language
         local language = vim.treesitter.language.get_lang(filetype) or filetype
-        local ok = pcall(vim.treesitter.start, buf, language)
+        local ok = pcall(vim.treesitter.start, buf_nr, language)
         if not ok then
           return
         end
@@ -32,7 +32,7 @@ return {
         vim.wo.foldenable = false
 
         -- replicate `indent = { enable = true }`
-        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.bo[buf_nr].indentexpr = [[v:lua.require'nvim-treesitter'.indentexpr()]]
 
         -- if filetype == 'haskell' then
         --  vim.bo[buf].indentexpr = ''

@@ -1,5 +1,5 @@
 return {
-  "scottmckendry/cyberdream.nvim",
+  'scottmckendry/cyberdream.nvim',
   lazy = false,
   priority = 1000,
 }

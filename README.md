@@ -11,6 +11,7 @@
 [Find / Search]
 <Space>fw     (N)  →  Find Word Under Cursor     - telescope.grep_string
 <Space>fs     (N)  →  Find Symbol (Document)     - telescope.lsp_document_symbols
+<Space>fS     (N)  →  Find Symbol (Workspace)    - telescope.lsp_workspace_symbols
 <Space>fa     (N)  →  Find All (Live Grep)       - telescope.live_grep
 <Space>ff     (N)  →  Find File                  - telescope.find_files
 <Space>fg     (N)  →  Find Git File              - telescope.git_files (fallback)
