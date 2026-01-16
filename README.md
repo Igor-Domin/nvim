@@ -9,59 +9,67 @@
 ```
 
 [Find / Search]
-<Space>fw     (N)  →  Find Word Under Cursor     - telescope.grep_string
-<Space>fs     (N)  →  Find Symbol (Document)     - telescope.lsp_document_symbols
-<Space>fS     (N)  →  Find Symbol (Workspace)    - telescope.lsp_workspace_symbols
-<Space>fa     (N)  →  Find All (Live Grep)       - telescope.live_grep
-<Space>ff     (N)  →  Find File                  - telescope.find_files
-<Space>fg     (N)  →  Find Git File              - telescope.git_files (fallback)
-<Space>fd     (N)  →  Find Definition            - vim.lsp.buf.definition
-<Space>fr     (N)  →  Find References            - vim.lsp.buf.references
+<Space>fw     (N)  ->  Find Word Under Cursor     - telescope.grep_string
+<Space>fs     (N)  ->  Find Symbol (Document)     - telescope.lsp_document_symbols
+<Space>fS     (N)  ->  Find Symbol (Workspace)    - telescope.lsp_workspace_symbols
+<Space>fa     (N)  ->  Find All (Live Grep)       - telescope.live_grep
+<Space>ff     (N)  ->  Find File                  - telescope.find_files
+<Space>fg     (N)  ->  Find Git File              - telescope.git_files (fallback)
+<Space>fd     (N)  ->  Find Definition            - vim.lsp.buf.definition
+<Space>fr     (N)  ->  Find References            - vim.lsp.buf.references
+/           (N/V)  ->  Find in File Forward
+?           (N/V)  ->  Find in File backward
 
 [Editing]
-<Space>re     (N)  →  Rename Symbol              - vim.lsp.buf.rename
-<Space>rs     (N)  →  Replace Word Under Cursor
-<Space>rs     (V)  →  Replace Selection
-<A-j>     (N/I/V)  →  Move Line Down
-<A-k>     (N/I/V)  →  Move Line Up
-J             (N)  →  Join Lines (keep cursor)
+<Space>re     (N)  ->  Rename Symbol              - vim.lsp.buf.rename
+<Space>rs     (N)  ->  Replace Word Under Cursor
+<Space>rs     (V)  ->  Replace Selection
+<A-j>     (N/I/V)  ->  Move Line Down
+<A-k>     (N/I/V)  ->  Move Line Up
+J             (N)  ->  Join Lines (keep cursor)
 
 [Clipboard]
-<Space>y      (N)  → Yank Line to Clipboard
-<Space>Y      (N)  → Yank Whole File
-<Space>y      (V)  → Yank Selection
+<Space>y      (N)  -> Yank Line to Clipboard
+<Space>Y      (N)  -> Yank Whole File
+<Space>y      (V)  -> Yank Selection
+yy            (N)  -> Yank Whole Line
+yw            (N)  -> Yank Word
+y$            (N)  -> Yank to end of Line
+y^            (N)  -> Yank to start of Line
+ygg           (N)  -> Yank to beginning of File
+yG            (N)  -> Yank to end of File
 
 [Misc]
-<Space>fe     (N)  → File Explorer               - :Ex
-<Space>u      (N)  → Toggle UndoTree
-<C-h>         (I)  → Signature Help              - vim.lsp.buf.signature_help
-K             (N)  → Hover Documentation         - vim.lsp.buf.hover
+<Space>fe     (N)  -> File Explorer               - :Ex
+<Space>u      (N)  -> Toggle UndoTree
+<C-h>         (I)  -> Signature Help              - vim.lsp.buf.signature_help
+K             (N)  -> Hover Documentation         - vim.lsp.buf.hover
 
 [Diagnostics]
-<Space>d      (N)  → Show Diagnostic Float
-[d / ]d       (N)  → Previous / Next Diagnostic
-[D / ]D       (N)  → First / Last Diagnostic
+<Space>d      (N)  -> Show Diagnostic Float
+[d / ]d       (N)  -> Previous / Next Diagnostic
+[D / ]D       (N)  -> First / Last Diagnostic
 
 [Harpoon]
-<Space>a      (N)  → Add File
-<Space>A      (N)  → Move File to Top
-<Space>q      (N)  → Toggle Harpoon Menu
-<C-h>         (N)  → Jump to File 1
-<C-j>         (N)  → Jump to File 2
-<C-k>         (N)  → Jump to File 3
-<C-l>         (N)  → Jump to File 4
-<C-S-p>       (N)  → Previous Harpoon Entry
-<C-S-n>       (N)  → Next Harpoon Entry
+<Space>a      (N)  -> Add File
+<Space>A      (N)  -> Move File to Top
+<Space>q      (N)  -> Toggle Harpoon Menu
+<C-h>         (N)  -> Jump to File 1
+<C-j>         (N)  -> Jump to File 2
+<C-k>         (N)  -> Jump to File 3
+<C-l>         (N)  -> Jump to File 4
+<C-S-p>       (N)  -> Previous Harpoon Entry
+<C-S-n>       (N)  -> Next Harpoon Entry
 
 [Run / Build]
-<Space>cr     (N)  → Run (runghc)
-<Space>cb     (N)  → Build + Run (compiled)
-<Space>cR     (N)  → Run Compiled Binary
+<Space>cr     (N)  -> Run (runghc)
+<Space>cb     (N)  -> Build + Run (compiled)
+<Space>cR     (N)  -> Run Compiled Binary
 
 [Git]
-<Space>gs     (N)  → Git Status (Fugitive)
-:GitMe        (C)  → Configure Repo (user, editor, diff, rebase)
-
+<Space>gs     (N)  -> Git Status (Fugitive)
+:GitMe        (C)  -> Configure Repo (user, editor, diff, rebase)
+:ZshMe        (C)  -> Configure Zsh
 ```
 
 These GLOBAL keymaps are created unconditionally when Nvim starts:

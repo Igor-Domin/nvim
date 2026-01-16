@@ -16,23 +16,6 @@ local function ensure_buf()
   return buf_nr
 end
 
-vim.api.nvim_create_user_command('HuntMessages', function()
-  local buf_nr = ensure_buf()
-  vim.cmd('new')
-  vim.api.nvim_win_set_buf(0, buf_nr)
-end, {})
-
-vim.api.nvim_create_user_command('Messages', function()
-  local output = vim.api.nvim_exec2('messages', { output = true }).output or ''
-  vim.cmd('new')
-  local buf_nr = vim.api.nvim_get_current_buf()
-  vim.bo[buf_nr].buftype = 'nofile'
-  vim.bo[buf_nr].bufhidden = 'wipe'
-  vim.bo[buf_nr].swapfile = false
-  vim.api.nvim_buf_set_name(buf_nr, 'Messages')
-  vim.api.nvim_buf_set_lines(buf_nr, 0, -1, false, vim.split(output, '\n', { plain = true }))
-end, {})
-
 local function level_name(level)
   return ({
     [vim.log.levels.TRACE] = 'TRACE',
@@ -84,6 +67,31 @@ local function append(level, msg)
     })
   end
 end
+
+vim.api.nvim_create_user_command('HuntMessages', function(opts)
+  local buf_nr = ensure_buf()
+  vim.cmd('new')
+  vim.api.nvim_win_set_buf(0, buf_nr)
+
+  if opts.args ~= '' then
+    local out = vim.api.nvim_exec2(opts.args, { output = true }).output or ''
+    if out ~= '' then
+      append(vim.log.levels.INFO, out)
+    end
+  end
+end, { nargs = '*', complete = 'command' })
+
+vim.api.nvim_create_user_command('Messages', function()
+  local output = vim.api.nvim_exec2('messages', { output = true }).output or ''
+  vim.cmd('new')
+  local buf_nr = vim.api.nvim_get_current_buf()
+  vim.bo[buf_nr].buftype = 'nofile'
+  vim.bo[buf_nr].bufhidden = 'wipe'
+  vim.bo[buf_nr].swapfile = false
+  vim.api.nvim_buf_set_name(buf_nr, 'Messages')
+  vim.api.nvim_buf_set_lines(buf_nr, 0, -1, false, vim.split(output, '\n', { plain = true }))
+end, {})
+
 
 -- Overrides --
 

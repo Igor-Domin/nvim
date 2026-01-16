@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       -- Diagnostics --
 
-      vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
+      vim.keymap.set('n', '<C-d>', vim.diagnostic.open_float, opts)
 
       vim.keymap.set('n', '[d', function()
         vim.diagnostic.goto_prev()
@@ -114,19 +114,40 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end)
     end
 
-    -- Enable auto-completion. Note: Use CTRL-Y to select an item. |complete_CTRL-Y|
     if client:supports_method('textDocument/completion') then
-      -- Use CTRL-space to trigger LSP completion.
       -- CTRL + p = previous item
       -- CTRL + n = next item
-      -- Use CTRL-Y to select an item. |complete_CTRL-Y|
+      -- Use CTRL-Y to select an item.
       vim.keymap.set('i', '<C-Space>', function()
         vim.lsp.completion.get()
       end)
 
+      vim.keymap.set('i', '<Tab>', function()
+        return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+      end, { expr = true })
+
+      vim.keymap.set('i', '<S-Tab>', function()
+        return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+      end, { expr = true })
+
+      vim.keymap.set('i', '<CR>', function()
+        return vim.fn.pumvisible() == 1 and '<C-y>' or '<CR>'
+      end, { expr = true })
+
+      vim.keymap.set('i', '<Esc>', function()
+        if vim.fn.pumvisible() == 1 then
+          return '<C-e><Esc>'
+        end
+        return '<Esc>'
+      end, { expr = true })
+
       -- Completion UX: show a menu without auto-select/insert.
-      vim.opt.completeopt = { 'menuone', 'noselect' }
-      pcall(function() vim.opt.completeopt:append('popup') end)
+      vim.opt.completeopt = { 'menuone', 'popup', 'noinsert', 'noselect', }
+
+      vim.o.pumborder = 'rounded'
+      vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'NONE' })
+      vim.api.nvim_set_hl(0, 'PmenuBorder', { bg = 'NONE', fg = "#aa12bb" })
+      vim.api.nvim_set_hl(0, 'PmenuSel', { fg = 'NONE', bg = '#5555ff', bold = true })
 
       -- Optional: trigger autocompletion on EVERY keypress. May be slow!
       local chars = {}
